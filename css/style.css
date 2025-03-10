@@ -1,0 +1,396 @@
+@charset "UTF-8";
+/**
+  Нормализация блочной модели
+ */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/**
+    Убираем внутренние отступы слева тегам списков,
+    у которых есть атрибут class
+  */
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+    Убираем внешние отступы body и двум другим тегам,
+    у которых есть атрибут class
+  */
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+/**
+    Убираем внешние отступы вертикали нужным тегам,
+    у которых есть атрибут class
+  */
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+    Убираем стандартный маркер маркированному списку,
+    у которого есть атрибут class
+  */
+:where(ul[class]) {
+  list-style: none;
+}
+
+/**
+    Обнуляем вертикальные внешние отступы параграфа,
+    объявляем локальную переменную для внешнего отступа вниз,
+    чтобы избежать взаимодействие с более сложным селектором
+  */
+p {
+  --paragraphMarginBottom: 24px;
+  margin-block: 0;
+}
+
+/**
+    Внешний отступ вниз для параграфа без атрибута class,
+    который расположен не последним среди своих соседних элементов
+  */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+/**
+    Упрощаем работу с изображениями
+  */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/**
+    Наследуем свойства шрифт для полей ввода
+  */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+  height: 100%;
+  /**
+      Плавный скролл
+    */
+  scroll-behavior: smooth;
+}
+
+body {
+  /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+  min-height: 100%;
+  /**
+      Унифицированный интерлиньяж
+    */
+  line-height: 1.5;
+}
+
+/**
+    Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+  */
+svg * {
+  -webkit-transition-property: fill, stroke;
+  transition-property: fill, stroke;
+}
+
+/**
+    Удаляем все анимации и переходы для людей,
+    которые предпочитают их не использовать
+  */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    -webkit-animation-duration: 0.01ms;
+            animation-duration: 0.01ms;
+    -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+    -webkit-transition-duration: 0.01ms;
+            transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}
+@font-face {
+  font-family: "Koloso";
+  src: url("../fonts/Kosko-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Koloso";
+  src: url("../fonts/Kosko-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --color-dark: #1A1A1A;
+  --color-light: #f5f5f5;
+  --color-accent: #6998ff;
+  --color-red: #f22c2c;
+  --border: 2px solid var(--color-accent);
+  --border-radius: 8px;
+  --font-family-base: "Koloso", sans-serif;
+  --container-width: 1200px;
+  --container-padding-x: 20px;
+  --section-padding-y: 63px;
+  --transition-duration: 0.3s;
+}
+
+.container {
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 768px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .visible-mobile {
+    display: none !important;
+  }
+}
+
+html,
+body {
+  font-size: clamp(16px, 1.25vw, 18px);
+  font-family: var(--font-family-base);
+  font-weight: 400;
+  line-height: 140%;
+  font-size: 32px;
+  color: var(--color-dark);
+  background-image: url(../images/bg/wallpaper.png);
+  background-size: 35%;
+  overflow-x: hidden;
+}
+
+a,
+button,
+input,
+textarea,
+svg * {
+  -webkit-transition-duration: var(--transition-duration);
+          transition-duration: var(--transition-duration);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+}
+
+h1, .h1 {
+  font-size: clamp(30px, 3.8888888889vw, 56px);
+}
+
+h2, .h2 {
+  font-size: clamp(30px, 2.7777777778vw, 40px);
+}
+
+h3, .h3 {
+  font-size: clamp(26px, 2.0833333333vw, 30px);
+}
+
+h4, .h4 {
+  font-size: clamp(18px, 1.3888888889vw, 20px);
+}
+
+.header {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.start {
+  border-radius: var(--border-radius);
+  border: var(--border);
+  background-color: var(--color-accent);
+  padding: 10px 10px;
+  max-width: 250px;
+}
+@media (hover: hover) {
+  .start:hover {
+    background-color: var(--color-light);
+  }
+}
+@media (hover: none) {
+  .start:active {
+    background-color: var(--color-light);
+  }
+}
+
+.red {
+  background-color: var(--color-red);
+  border: 2px solid var(--color-red);
+  margin-top: 100%;
+  margin-left: 50%;
+}
+@media (max-width: 768px) {
+  .red {
+    margin: 0;
+  }
+}
+
+.input-button {
+  border-radius: var(--border-radius);
+  border: var(--border);
+  background-color: var(--color-accent);
+  padding: 5px 15px;
+  max-width: 250px;
+}
+@media (hover: hover) {
+  .input-button:hover {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+}
+@media (hover: none) {
+  .input-button:active {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+}
+
+.input {
+  text-align: center;
+  width: 150px;
+  height: 80px;
+  border: 2px solid var(--color-dark);
+  border-radius: var(--border-radius);
+}
+.input:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
+.input::-webkit-input-placeholder {
+  font-size: 24px;
+}
+.input::-moz-placeholder {
+  font-size: 24px;
+}
+.input:-ms-input-placeholder {
+  font-size: 24px;
+}
+.input::-ms-input-placeholder {
+  font-size: 24px;
+}
+.input::placeholder {
+  font-size: 24px;
+}
+
+.rules {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .rules {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    row-gap: 50px;
+  }
+}
+.rules__content {
+  max-width: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  row-gap: 20px;
+}
+@media (max-width: 768px) {
+  .rules__content {
+    max-width: 100%;
+  }
+}
+.rules__game {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  row-gap: 20px;
+  text-align: center;
+}
+@media (max-width: 480px) {
+  .rules__game {
+    font-size: 24px;
+  }
+}
+.rules__game-word {
+  font-size: 56px;
+}
+@media (max-width: 480px) {
+  .rules__game-word {
+    font-size: 36px;
+  }
+}
