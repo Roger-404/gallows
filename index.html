@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Виселица</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header container">
+      <h1 class="header__title">Виселица</h1>
+    </header>
+    <main class="main">
+      <section class="rules container">
+        <div class="rules__content">
+          <h2 class="rules__contnent-title" id="hiddenTitle">Правила</h2>
+          <div class="rules__content-text" id="hiddenText">
+            Правила очень просты. Вам загадывают слово, а вы поочерёдро
+            вписываете буквы пытаясь отгадать слово.У вас будет всего 10
+            попыток. В случае, если эта бувка присутствует в слове, она появится
+            в строке, в ином случае вы теряете попытку. Удачи и весёлой игры!
+          </div>
+          <button class="rules__content-button start" type="button">
+            Начать игру
+          </button>
+        </div>
+        <div class="rules__game visually-hidden">
+          <div class="rules__game-previous"></div>
+          <div class="rules__game-attempt"></div>
+          <div class="rules__game-used"></div>
+          <div class="rules__game-word"></div>
+          <div class="rules__game-error"></div>
+          <input
+            type="text"
+            class="input"
+            maxlength="1"
+            placeholder="Вводить здесь"
+          />
+          <button class="rules__game-button input-button" type="submit" >Ввод</button>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"></footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
